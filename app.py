@@ -15,7 +15,7 @@ PWD = ""
 driver = webdriver.Edge('C:\Program Files (x86)/Microsoft/Edge/Application/msedgedriver')
 driver.get("https://app.revature.com/caliber/home")
 
-initial_batch = "00001228"
+initial_batch = "00001231"
 
 
 class topQCScores():
@@ -25,7 +25,7 @@ class topQCScores():
         self.trainer_scores = []
         self.trainers = []
         self.iter = 0
-        self.cohortFound = False
+        self.cohortFound = True
 
     def main(self):
         self.wake_up()
@@ -62,7 +62,7 @@ class topQCScores():
         search_ele = driver.find_element("xpath", search_element_path)
         if self.iter > 0:
             time.sleep(1)
-            search_ele.click()
+            if self.cohortFound: search_ele.click()
                 
             input_search_bar_path = "/html[1]/body[1]/app-root[1]/div[1]/app-reports-container[1]/div[1]/app-reports-toolbar[1]/div[2]/div[1]/div[2]/div[1]/div[1]/input[1]"
             search = driver.find_element("xpath", input_search_bar_path)
@@ -73,12 +73,13 @@ class topQCScores():
                 pass
             try:
                 batch = WebDriverWait(driver, timeout=1).until(lambda d: d.find_element("xpath", (f"//*[contains(text(), {batchid})]")))
+                self.cohortFound = True
                 batch.click()
             except:
                 self.iter += 1
                 new_batch_num = str((int(batchid) + 1))
                 batchid = new_batch_num.zfill(8)
-                print(batchid)
+                self.cohortFound = False
                 nextt = True
         associate_names = []
         associate_qc_scores = []
@@ -134,6 +135,7 @@ class topQCScores():
             print(associate_trainer_scores)
             print(associate_qc_scores)
             print(associate_trainers)
+            print(self.qc_scores)
             time.sleep(0.5)
             self.iter += 1
 
