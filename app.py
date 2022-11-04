@@ -9,8 +9,8 @@ import pandas as pd
 import os
 
 
-EMAIL = "jonathan.infante@revature.com"
-PWD = "Kooljonkids1!"
+EMAIL = ""
+PWD = ""
 
 driver = webdriver.Edge('C:\Program Files (x86)/Microsoft/Edge/Application/msedgedriver')
 driver.get("https://app.revature.com/caliber/home")
@@ -124,7 +124,6 @@ class topQCScores():
 
                 i += 1
             
-
             self.names += associate_names
             self.qc_scores += associate_qc_scores
             self.trainer_scores += associate_trainer_scores
@@ -137,7 +136,6 @@ class topQCScores():
             print(associate_trainers)
             time.sleep(0.5)
             self.iter += 1
-
 
     def searching(self, batchid):
         input_search_bar_path = "/html[1]/body[1]/app-root[1]/div[1]/app-reports-container[1]/div[1]/app-reports-toolbar[1]/div[2]/div[1]/div[2]/div[1]/div[1]/input[1]"
@@ -162,7 +160,6 @@ class topQCScores():
         new_row_values = []
         for i in range(len(row_values[0])-1):
             new_row_values.append([row_values[0][i], row_values[1][i], row_values[2][i], row_values[3][i]])
-
 
         column_names = ["Name", "QC Score", "Trainer Score", "Trainer/Tech Stack"]
         df = pd.DataFrame(new_row_values, columns=column_names, dtype=object) #Creating the Data Frame
